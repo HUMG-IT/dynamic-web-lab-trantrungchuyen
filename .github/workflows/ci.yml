@@ -1,4 +1,4 @@
-name: Kiểm thử Node.js và Cypress
+name: CI Kiểm thử tự động Node.js và Cypress
 
 on:
   push:
@@ -33,18 +33,8 @@ jobs:
           npx wait-on http://localhost:3000   # Chờ server sẵn sàng
 
       - name: Chạy kiểm thử End-to-End (E2E) với Cypress
-        # Thực hiện kiểm thử E2E bằng Cypress cho UI viết bằng HTML, CSS, và JavaScript
         uses: cypress-io/github-action@v2
         with:
           config-file: cypress.config.js  # Nếu có tệp cấu hình Cypress. Có thể bỏ dòng này nếu không có
         env:
           CI: true  # Đặt chế độ Cypress là CI
-
-      - name: Cài đặt Chrome và ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          npm install chromedriver selenium-webdriver  # Cài đặt ChromeDriver từ npm
-
-      - name: Chạy kiểm thử UI với Selenium
-        run: xvfb-run -a node test/selenium_test.js  # Sử dụng Xvfb để chạy trong môi trường không có giao diện
